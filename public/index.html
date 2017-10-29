@@ -35,13 +35,15 @@
     <script>
     // jQuery in order to autoscroll carousels
 $(document).ready(function() {
-  $(".carousel").carousel({ dist: 0 });
+  var carousel = $(".carousel");
+  var slider = $(".carousel-slider");
+  carousel.carousel({ dist: 0 });
   window.setInterval(function() {
-    $(".carousel").carousel("next");
+    carousel.carousel("next");
   }, 2000);
-  $(".carousel-slider").carousel({ dist: 0 });
+  slider.carousel({ dist: 0 });
   window.setInterval(function() {
-    $(".carousel-slider").carousel("prev");
+    slider.carousel("prev");
   }, 2000);
 });
 </script>

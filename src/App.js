@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import { Carousel } from "react-materialize";
 import { subscribeToTimer } from "./api";
+import CatCarousel from "./components/carousel";
 
 import "./App.css";
 var catPic = "";
@@ -15,7 +16,8 @@ class App extends Component {
 
     subscribeToTimer((err, timestamp) =>
       this.setState({
-        timestamp
+        timestamp,
+        catPicArray
       })
     );
   }
@@ -23,12 +25,17 @@ class App extends Component {
   // There are media urls in many of the arrays, though it is important to filter these and choose only the tweets with media.
 
   state = {
-    timestamp: "no timestamp yet"
+    timestamp: "no timestamp yet",
+    catPicArray: []
   };
   // console.log('Hello from appjs', state)
   render() {
     // This is working!!
-    if (this.state.timestamp.entities && this.state.timestamp.entities.media) {
+    if (
+      this.state.timestamp &&
+      this.state.timestamp.entities &&
+      this.state.timestamp.entities.media
+    ) {
       catPic = this.state.timestamp.entities.media[0].media_url;
       catPicArray.push(catPic);
       console.log("finally an array", catPicArray);
@@ -40,7 +47,8 @@ class App extends Component {
     }
 
     // Function to randomize catpics in array built from twitter stream.
-    function shuffleCatPicArray(array) {
+    function shuffleCatPicArray(originalArray) {
+      let array = originalArray.slice();
       var currentIndex = array.length,
         temporaryValue,
         randomIndex;
@@ -61,7 +69,15 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Carousel images={[shuffledCatPicArray]} />
+        <Carousel
+          images={[
+            "http://pbs.twimg.com/media/DNU1XXSUEAEo3OP.jpg",
+            "http://pbs.twimg.com/media/DNU1jzlVAAAdwKe.jpg",
+            "https://lorfempixel.com/250/250/nature/3",
+            "https://lorempixel.com/250/250/nature/4",
+            "https://lorempixel.com/250/250/nature/5"
+          ]}
+        />
         <div>
           <Carousel
             options={{ fullWidth: true, dist: 0 }}
@@ -76,34 +92,7 @@ class App extends Component {
           <p>I'm a Slider!!!</p>
         </div>
 
-        {this.state.timestamp.entities &&
-        this.state.timestamp.entities.media ? (
-          <div>
-            <Carousel
-              className="bottom-carousel"
-              images={[
-                this.state.timestamp.entities.media[0].media_url,
-                "http://pbs.twimg.com/media/DNU1XXSUEAEo3OP.jpg",
-                "https://lorempixel.com/250/250/nature/3",
-                "https://lorempixel.com/250/250/nature/4",
-                "https://lorempixel.com/250/250/nature/5"
-              ]}
-            />
-          </div>
-        ) : (
-          <div>
-            <Carousel
-              className="bottom-carousel"
-              images={[
-                "https://lorempixel.com/250/250/nature/1",
-                "https://lorempixel.com/250/250/nature/2",
-                "https://lorempixel.com/250/250/nature/3",
-                "https://lorempixel.com/250/250/nature/4",
-                "https://lorempixel.com/250/250/nature/5"
-              ]}
-            />
-          </div>
-        )}
+        <CatCarousel catPicArray={this.state.catPicArray} />
 
         <div>
           <p className="App-intro">

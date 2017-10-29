@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
+import { Carousel } from "react-materialize";
 import { subscribeToTimer } from "./api";
 
 import "./App.css";
@@ -23,14 +24,47 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          Here's the 'timestamp' variable {this.state.timestamp.text}
-          {console.log(this.state.timestamp.entities)}
-        </p>
+        <Carousel
+          options={{}}
+          images={[
+            "https://lorempixel.com/250/250/nature/1",
+            "https://lorempixel.com/250/250/nature/2",
+            "https://lorempixel.com/250/250/nature/3",
+            "https://lorempixel.com/250/250/nature/4",
+            "https://lorempixel.com/250/250/nature/5"
+          ]}
+        />
+        <div>
+          <Carousel
+            className="Reverse"
+            options={{ fullWidth: true }}
+            images={[
+              "https://lorempixel.com/800/400/food/1",
+              "https://lorempixel.com/800/400/food/2",
+              "https://lorempixel.com/800/400/food/3",
+              "https://lorempixel.com/800/400/food/4",
+              "https://lorempixel.com/800/400/food/5"
+            ]}
+          />
+          <p>I'm a Slider!!!</p>
+        </div>
+        <div>
+          <Carousel
+            images={[
+              "https://lorempixel.com/250/250/nature/1",
+              "https://lorempixel.com/250/250/nature/2",
+              "https://lorempixel.com/250/250/nature/3",
+              "https://lorempixel.com/250/250/nature/4",
+              "https://lorempixel.com/250/250/nature/5"
+            ]}
+          />
+        </div>
+        <div>
+          <p className="App-intro">
+            Here's the 'timestamp' variable {this.state.timestamp.text}
+            {console.log(this.state.timestamp.entities)}
+          </p>
+        </div>
       </div>
     );
   }

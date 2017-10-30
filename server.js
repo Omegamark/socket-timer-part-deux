@@ -6,13 +6,17 @@ const twitterClient = require("./twitter");
 var twitterStream;
 var catPic = "";
 var catPicArray = [];
+var clients = 0;
 
-io.on("connection", client => {
+io.on("connection", socket => {
+  clients++;
+  console.log("there are " + clients + " connected");
   tweetCall();
-  client.on("subscribeToTwitter", interval => {
+  socket.on("subscribeToTwitter", interval => {
     console.log("client is subscribing to timer with interval", interval);
     setInterval(() => {
-      client.emit("twitterStream", twitterStream);
+      io.sockets.emit("twitterStream", twitterStream);
+
       // console.log("YO I'M A TWITTERSTREAM", twitterStream);
       // **** May not need this statment here. ****
       if (
@@ -29,8 +33,12 @@ io.on("connection", client => {
       // This is where the interval variable is being set, in this case it is 5000ms || interval = 1000ms by default.
     }, 1000);
   });
+  socket.on("disconnect", () => {
+    clients--;
+    console.log("there are " + clients + " users connected");
+  });
 
-  client.on("error", err => {
+  socket.on("error", err => {
     console.error(err);
   });
 });

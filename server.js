@@ -15,7 +15,11 @@ io.on("connection", client => {
       client.emit("twitterStream", twitterStream);
       // console.log("YO I'M A TWITTERSTREAM", twitterStream);
       // **** May not need this statment here. ****
-      if (twitterStream.entities.media) {
+      if (
+        twitterStream &&
+        twitterStream.entities &&
+        twitterStream.entities.media
+      ) {
         console.log(
           "I'm a pic url!!!!!!!",
           twitterStream.entities.media[0].media_url
@@ -24,6 +28,10 @@ io.on("connection", client => {
 
       // This is where the interval variable is being set, in this case it is 5000ms || interval = 1000ms by default.
     }, 1000);
+  });
+
+  client.on("error", err => {
+    console.error(err);
   });
 });
 

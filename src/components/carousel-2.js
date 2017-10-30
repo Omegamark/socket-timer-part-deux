@@ -21,10 +21,7 @@ class CatCarousel2 extends Component {
 
     return (
       <div>
-        <Carousel
-          ref={r => (this.ref = r)}
-          options={{ fullWidth: true, dist: 0 }}
-        >
+        <Carousel ref={r => (this.ref = r)} options={{ fullWidth: true }}>
           {catPics.length ? (
             catPics.map(image => <img key={image} src={image} />)
           ) : (

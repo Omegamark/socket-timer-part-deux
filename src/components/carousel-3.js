@@ -8,7 +8,7 @@ class CatCarousel3 extends Component {
 
   componentDidMount = () => {
     this.interval = window.setInterval(() => {
-      window.$(findDOMNode(this.ref)).carousel("next", 3); // ".carousel-slider"
+      window.$(findDOMNode(this.ref)).carousel("next", 3); // ".carousel"
     }, 2000);
   };
 

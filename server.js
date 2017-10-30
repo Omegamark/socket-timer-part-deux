@@ -10,7 +10,7 @@ var clients = 0;
 
 io.on("connection", socket => {
   clients++;
-  console.log("there are " + clients + " connected");
+  console.log("there are " + clients + " users connected");
   tweetCall();
   socket.on("subscribeToTwitter", interval => {
     console.log("client is subscribing to timer with interval", interval);

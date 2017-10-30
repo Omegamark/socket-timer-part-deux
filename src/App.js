@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import { Carousel } from "react-materialize";
-import { subscribeToTimer } from "./api";
+import { subscribeToTwitter } from "./api";
 import CatCarousel from "./components/carousel";
-
+import CatCarousel2 from "./components/carousel-2";
+import CatCarousel3 from "./components/carousel-3";
 import "./App.css";
 // Put this in state.
 // Array of randomized cat pics
@@ -11,21 +11,21 @@ import "./App.css";
 
 class App extends Component {
   state = {
-    timestamp: "no timestamp yet",
+    tweet: "no tweet yet",
     catPics: {}
   };
 
   componentDidMount() {
-    subscribeToTimer((err, timestamp) => {
+    subscribeToTwitter((err, tweet) => {
       const { catPics } = this.state;
 
-      if (timestamp && timestamp.entities && timestamp.entities.media) {
-        const catPic = timestamp.entities.media[0].media_url;
+      if (tweet && tweet.entities && tweet.entities.media) {
+        const catPic = tweet.entities.media[0].media_url;
         catPics[catPic] = catPic;
         console.log("finally an array", Object.keys(catPics));
 
         this.setState({
-          timestamp,
+          tweet,
           catPics
         });
       }
@@ -40,67 +40,54 @@ class App extends Component {
 
   // Function to randomize catpics in array built from twitter stream.
 
-  shuffleCatPicArray = originalArray => {
-    let array = originalArray.slice();
-    var currentIndex = array.length,
-      temporaryValue,
-      randomIndex;
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-  };
+  // From a previous solution, no longer necessary.
+  // shuffleCatPicArray = originalArray => {
+  //   let array = originalArray.slice();
+  //   var currentIndex = array.length,
+  //     temporaryValue,
+  //     randomIndex;
+  //   // While there remain elements to shuffle...
+  //   while (0 !== currentIndex) {
+  //     // Pick a remaining element...
+  //     randomIndex = Math.floor(Math.random() * currentIndex);
+  //     currentIndex -= 1;
+  //
+  //     // And swap it with the current element.
+  //     temporaryValue = array[currentIndex];
+  //     array[currentIndex] = array[randomIndex];
+  //     array[randomIndex] = temporaryValue;
+  //   }
+  //   return array;
+  // };
 
   // console.log('Hello from appjs', state)
   render() {
-    const { timestamp, catPics } = this.state;
+    const { tweet, catPics } = this.state;
     // This is working!!
     //
     const catPicArray = Object.keys(catPics);
 
     return (
       <div className="App">
-        <Carousel
-          images={[
-            "http://pbs.twimg.com/media/DNU1XXSUEAEo3OP.jpg",
-            "http://pbs.twimg.com/media/DNU1jzlVAAAdwKe.jpg",
-            "https://lorfempixel.com/250/250/nature/3",
-            "https://lorempixel.com/250/250/nature/4",
-            "https://lorempixel.com/250/250/nature/5"
-          ]}
+        <CatCarousel3
+          catPics={catPicArray}
+          key={"catPics3-" + catPicArray.length}
         />
-        <div>
-          <Carousel
-            options={{ fullWidth: true, dist: 0 }}
-            images={[
-              "https://lorempixel.com/800/400/food/1",
-              "https://lorempixel.com/800/400/food/2",
-              "https://lorempixel.com/800/400/food/3",
-              "https://lorempixel.com/800/400/food/4",
-              "https://lorempixel.com/800/400/food/5"
-            ]}
-          />
-          <p>I'm a Slider!!!</p>
-        </div>
+        <CatCarousel2
+          catPics={catPicArray}
+          key={"catPics2-" + catPicArray.length}
+        />
 
         <CatCarousel
           catPics={catPicArray}
           key={"catPics-" + catPicArray.length}
         />
 
-        {timestamp && (
+        {tweet && (
           <div>
             <p className="App-intro">
-              Here's the 'timestamp' variable {timestamp.text}
-              {console.log(timestamp.entities)}
+              HERE'S THE TWEET: {tweet.text}
+              {console.log(tweet.entities)}
             </p>
           </div>
         )}

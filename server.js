@@ -9,7 +9,7 @@ var catPicArray = [];
 
 io.on("connection", client => {
   tweetCall();
-  client.on("subscribeToTimer", interval => {
+  client.on("subscribeToTwitter", interval => {
     console.log("client is subscribing to timer with interval", interval);
     setInterval(() => {
       client.emit("twitterStream", twitterStream);

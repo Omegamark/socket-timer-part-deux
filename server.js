@@ -20,7 +20,6 @@ io.on("connection", socket => {
     clients--;
     console.log("there are " + clients + " users connected");
   });
-
   socket.on("error", err => {
     console.error(err);
   });
@@ -29,7 +28,7 @@ io.on("connection", socket => {
 io.listen(port);
 console.log("sanity check ", port);
 
-// Functions for socket twitter api calls
+// Function for socket twitter api calls
 function tweetCall() {
   stream = twitterClient.stream("statuses/filter", {
     track: "#cats,#kittens,#meow,#cutecats,#instacats,#catsofinstagram"

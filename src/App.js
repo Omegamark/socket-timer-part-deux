@@ -12,9 +12,10 @@ class App extends Component {
   };
 
   componentDidMount() {
+    // Manipulating the tweet data retrieved from socket.io server and passing it down as props to components.
     subscribeToTwitter((err, tweet) => {
       const { catPics } = this.state;
-
+      // Not every tweet has a (media) property, so this is a little validation to ensure I don't get errors, undefineds, etc.
       if (tweet && tweet.entities && tweet.entities.media) {
         const catPic = tweet.entities.media[0].media_url;
         catPics[catPic] = catPic;
@@ -27,7 +28,9 @@ class App extends Component {
   }
 
   render() {
+    // Destructuring tweet & catPics off of state.
     const { tweet, catPics } = this.state;
+    // Using Object.keys to create an array out of the catPics object.
     const catPicArray = Object.keys(catPics);
 
     return (
